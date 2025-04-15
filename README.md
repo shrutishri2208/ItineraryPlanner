@@ -12,8 +12,6 @@ In the same directory, to start the system in CLI, run:
 
 ## Design decisions
 
-### About the agents
-
 1. The first agent `customerAgent.js`, is a separate class, responsible for handling the flow of questions
 2. The second agent `apiAgent.js`, is responsible for handling the external API calls
 3. The third agent `statusAgent.js`, is responsible for handling the status after each call

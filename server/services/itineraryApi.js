@@ -1,7 +1,7 @@
 async function getItineraryData(data) {
   return {
     status: "SUCCESS",
-    response: `Travel to ${data.destination}, from dates ${data.date}, with specific interests in ${data.interests}`,
+    response: `Traveling to ${data.destination}, from date ${data.date}, with specific interests in ${data.interests}`,
   };
 }
 

@@ -6,8 +6,8 @@ class CustomerAgent {
     this.userData = {
       itinerary: {
         destination: null,
-        // date: null,
-        // interests: null,
+        date: null,
+        interests: null,
       },
       hotel: {
         // type: null,
@@ -19,7 +19,7 @@ class CustomerAgent {
       cab: {
         pickupLocation: null,
         dropOffLocation: null,
-        date: null,
+        dateTime: null,
       },
     };
   }
@@ -50,7 +50,7 @@ class CustomerAgent {
   }
 
   async processUserInput({ userInput, questionKey, serviceType, askNext }) {
-    const prompt = `For the key ${questionKey}, user answer is ${userInput}, return only the extracted structured data. Only return the pure string data, no text with it, not in JSON format`;
+    const prompt = `For the key ${questionKey}, user answer is ${userInput}, return only the extracted structured data. Only return the pure string data, no text with it, not in JSON format. If the user input is a date format it into ISO format`;
 
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",

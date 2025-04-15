@@ -27,7 +27,6 @@ async function callApi(endpoint, data) {
       body: JSON.stringify(data),
     });
     const result = await res.json();
-    console.log("RESULT", result);
     return result;
   } catch (error) {
     return { status: "ERROR", response: error.message };

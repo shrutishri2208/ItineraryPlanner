@@ -14,23 +14,23 @@ class Orchestrator {
     this.rl.question(
       "What do you need help with?\n1. Planning a trip \n2. Booking a hotel or restaurant \n3. Booking a cab \n\n",
       (input) => {
-        if (input === "1") {
+        if (input === "1" || input === "1.") {
           this.ask({
             questionText: "Where are you planning to go next?",
             serviceType: "itinerary",
             questionKey: "destination",
           });
-        } else if (input === "2") {
+        } else if (input === "2" || input === "2.") {
           this.ask({
-            questionText: "Choose a city",
+            questionText: "Which city are planning for?",
             serviceType: "hotel",
             questionKey: "city",
           });
-        } else if (input === "3") {
+        } else if (input === "3" || input === "3.") {
           this.ask({
-            questionText: "For what date do you want to book?",
+            questionText: "What is the pickup location?",
             serviceType: "cab",
-            questionKey: "date",
+            questionKey: "pickupLocation",
           });
         }
       }

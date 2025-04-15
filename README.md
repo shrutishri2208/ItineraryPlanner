@@ -10,6 +10,8 @@ In the same directory, to start the system in CLI, run:
 
 ### `node index.js`
 
+#### This project requires an API key for OpenAI. Refer `.env.example`
+
 ## Design decisions
 
 1. The first agent `customerAgent.js`, is a separate class, responsible for handling the flow of questions

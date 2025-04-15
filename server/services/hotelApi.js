@@ -1,12 +1,8 @@
-async function getHotelData() {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        status: "SUCCESS",
-        response: `Booked a ${data.type} at ${data.city} from ${data.dates} for ${data.noOfPeople} people, with a preference of ${data.foodPreference}`,
-      });
-    }, 1000);
-  });
+async function getHotelData(data) {
+  return {
+    status: "SUCCESS",
+    response: `Booked a hotel at ${data.city} from ${data.date} for ${data.noOfPeople} people, with a preference of ${data.foodPreference}`,
+  };
 }
 
 module.exports = { getHotelData };

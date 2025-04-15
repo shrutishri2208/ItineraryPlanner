@@ -1,9 +1,12 @@
 const express = require("express");
+const apiRoutes = require("./routes/apiRoutes");
 
 const app = express();
 app.use(express.json());
 
-app.use("/api/test", (req, res) => {
+app.use("/api", apiRoutes);
+
+app.get("/test", (req, res) => {
   res.json({ message: "HELLO" });
 });
 

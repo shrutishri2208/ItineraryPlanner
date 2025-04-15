@@ -4,33 +4,53 @@ const eventEmitter = require("../eventEmitter");
 class CustomerAgent {
   constructor() {
     this.userData = {
-      destination: null,
-      // date: null,
-      // interests: null,
+      itinerary: {
+        destination: null,
+        // date: null,
+        // interests: null,
+      },
+      hotel: {
+        // type: null,
+        city: null,
+        date: null,
+        noOfPeople: null,
+        foodPreference: null,
+      },
+      cab: {
+        pickupLocation: null,
+        dropOffLocation: null,
+        date: null,
+      },
     };
   }
 
-  async storeUserInputData({ key, value, askNext }) {
-    this.userData[key] = value;
+  async storeUserInputData({ questionKey, serviceType, value, askNext }) {
+    this.userData[serviceType][questionKey] = value;
 
-    const nextKey = Object.keys(this.userData).find((k) => !this.userData[k]);
+    const nextKey = Object.keys(this.userData[serviceType]).find(
+      (k) => !this.userData[serviceType][k]
+    );
     if (askNext && nextKey) {
       const nextQuestion = await this.getNextQuestion({ questionKey: nextKey });
-      askNext({ questionText: nextQuestion, questionKey: nextKey });
+      askNext({
+        questionText: nextQuestion,
+        serviceType,
+        questionKey: nextKey,
+      });
     } else {
-      await this.sendCollectedData();
+      await this.sendCollectedData({ serviceType });
     }
   }
 
-  async sendCollectedData() {
+  async sendCollectedData({ serviceType }) {
     eventEmitter.emit("user-data-collected", {
-      serviceType: "itinerary",
-      data: this.userData,
+      serviceType: serviceType,
+      data: this.userData[serviceType],
     });
   }
 
-  async processUserInput({ userInput, key, askNext }) {
-    const prompt = `For the key ${key}, user answer is ${userInput}, return only the extracted structured data. Only return the pure string data, no text with it, not in JSON format`;
+  async processUserInput({ userInput, questionKey, serviceType, askNext }) {
+    const prompt = `For the key ${questionKey}, user answer is ${userInput}, return only the extracted structured data. Only return the pure string data, no text with it, not in JSON format`;
 
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
@@ -52,9 +72,19 @@ class CustomerAgent {
     const result = await response.json();
     const data = result.choices[0].message.content;
     if (data) {
-      this.storeUserInputData({ key, value: data, askNext });
+      this.storeUserInputData({
+        questionKey,
+        serviceType,
+        value: data,
+        askNext,
+      });
     } else {
-      this.storeUserInputData({ key, value: null, askNext });
+      this.storeUserInputData({
+        questionKey,
+        serviceType,
+        value: null,
+        askNext,
+      });
     }
   }
 

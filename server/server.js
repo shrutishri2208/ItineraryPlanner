@@ -7,7 +7,7 @@ app.use(express.json());
 app.use("/api", apiRoutes);
 
 app.get("/test", (req, res) => {
-  res.json({ message: "HELLO" });
+  res.json({ message: "working fine" });
 });
 
 const PORT = 5000;

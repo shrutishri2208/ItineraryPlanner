@@ -10,7 +10,6 @@ class CustomerAgent {
         interests: null,
       },
       hotel: {
-        // type: null,
         city: null,
         date: null,
         noOfPeople: null,
@@ -71,25 +70,16 @@ class CustomerAgent {
     });
     const result = await response.json();
     const data = result.choices[0].message.content;
-    if (data) {
-      this.storeUserInputData({
-        questionKey,
-        serviceType,
-        value: data,
-        askNext,
-      });
-    } else {
-      this.storeUserInputData({
-        questionKey,
-        serviceType,
-        value: null,
-        askNext,
-      });
-    }
+    this.storeUserInputData({
+      questionKey,
+      serviceType,
+      value: data || null,
+      askNext,
+    });
   }
 
   async getNextQuestion({ questionKey }) {
-    const prompt = `For the key ${questionKey}, ask relevant question to get the user data for that key, in minimum words. Ask question relevant only to the ${questionKey}. No extra questions`;
+    const prompt = `For the key ${questionKey}, ask relevant question to get the user data for that key, in minimum words. Ask question relevant only to the ${questionKey}. No extra questions related to anything else`;
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {

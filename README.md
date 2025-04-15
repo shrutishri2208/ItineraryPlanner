@@ -1,8 +1,8 @@
-# Getting Started with Pre-requisite Collection & Booking System
+# Pre-requisite Collection & Booking System
 
 ## Steps to run the system
 
-In the `server` directory, to run the local express server, run:
+To run the local express server, in the `server` directory run:
 
 ### `node server.js`
 

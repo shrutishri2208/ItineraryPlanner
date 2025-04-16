@@ -49,6 +49,10 @@ class CustomerAgent {
   }
 
   async processUserInput({ userInput, questionKey, serviceType, askNext }) {
+    if (!OPEN_AI_API_KEY) {
+      console.error("No API key found. Please add one in .env file");
+      process.exit(0);
+    }
     const prompt = `For the key ${questionKey}, user answer is ${userInput}, return only the extracted structured data. Only return the pure string data, no text with it, not in JSON format. If the user input is a date format it into ISO format`;
 
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -79,6 +83,11 @@ class CustomerAgent {
   }
 
   async getNextQuestion({ questionKey }) {
+    if (!OPEN_AI_API_KEY) {
+      console.error("No API key found");
+      process.exit(0);
+    }
+
     const prompt = `For the key ${questionKey}, ask relevant question to get the user data for that key, in minimum words. Ask question relevant only to the ${questionKey}. No extra questions related to anything else`;
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
